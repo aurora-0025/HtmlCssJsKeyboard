@@ -5,18 +5,21 @@ new Audio('sounds/laptop_notebook_key_press.mp3').load()
 
 
 let keyboard =document.querySelector('.hidden')
+let keysFrame =document.querySelector('.keys-frame')
 
 window.addEventListener("load", async ()=>{
    await keyboard.classList.remove('hidden')
-
     let keys = [...document.querySelectorAll('.key')];
     keys.forEach((key) => {
         key.addEventListener('mousedown', (e) => {
             e.preventDefault()
-            window.dispatchEvent(new KeyboardEvent('keydown', { 'code': e.target.id }));
-        })
-        key.addEventListener('mouseup', (e) => {
-            window.dispatchEvent(new KeyboardEvent('keyup', { 'code': e.target.id }));
+            let pressedKey = e.target.id
+            window.dispatchEvent(new KeyboardEvent('keydown', { 'code': pressedKey }));
+            window.addEventListener('mouseup', () => {
+                window.dispatchEvent(new KeyboardEvent('keyup', { 'code': pressedKey }));
+                pressedKey="undefined"
+                window.removeEventListener('mouseup', ()=> {return})
+            })
         })
     })
 
@@ -35,8 +38,8 @@ window.addEventListener("load", async ()=>{
         else{
             new Audio('sounds/laptop_notebook_key_press.mp3').play()
         }
-        if(keyDown==null){
-            return console.log('key pressed which is not in this keyboard');
+        if(keyDown==null||keyDown=="undefined"){
+            return
         }
         keyDown.classList.add('active')
 
@@ -44,8 +47,8 @@ window.addEventListener("load", async ()=>{
 
     window.addEventListener('keyup', function (e) {
         let keyUp = document.getElementById(`${e.code}`)
-        if(keyUp==null){
-            return console.log('key up which is not in this keyboard');
+        if(keyUp==null||keyUp=="undefined"){
+            return
         }
         keyUp.classList.remove('active')
         keyUp.classList.add('remove')
