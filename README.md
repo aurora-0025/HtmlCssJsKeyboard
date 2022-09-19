@@ -6,7 +6,7 @@
 
 <p align="center">Clack clack clack (keyboard sound intensifies)...</p>
 <p>
-  <a href="http://html-css-js-keyboard.vercel.app/">
+  <a href="https://aurora-0025.github.io/HtmlCssJsKeyboard/">
     <h3 align="center">check it out</h3>
   </a>
 </p>
